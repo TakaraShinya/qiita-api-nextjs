@@ -17,7 +17,7 @@ const Home: NextPage<HomeProps> = ({ qiitaItems, generatedAt }) => {
     <div className="mx-auto max-w-screen-md">
       <h1>更新日時: {generatedAt}</h1>
       <div className="flex flex-wrap gap-y-12">
-        {qiitaItems.map(({ id, likes_count, ogpImageUrl, url }, i) => {
+        {qiitaItems.map(({ id, likes_count, ogpImageUrl, url, title }, i) => {
           return (
             <div className={`w-full p-0 sm:w-1/2 ${i % 2 === 0 ? "sm:pr-2" : "sm:pl-2"}`} key={id}>
               <a
@@ -27,7 +27,7 @@ const Home: NextPage<HomeProps> = ({ qiitaItems, generatedAt }) => {
                 target="_blank"
               >
                 <Image
-                  alt="Qiita記事のogp画像"
+                  alt={`${title}のQGP画像`}
                   height={630}
                   layout="responsive"
                   src={ogpImageUrl}
@@ -47,7 +47,7 @@ const Home: NextPage<HomeProps> = ({ qiitaItems, generatedAt }) => {
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const jsdom = new JSDOM();
-  const apiUrl = `${process.env.QIITA_API_URL}?query=user:ganja_tuber&per_page=4`;
+  const apiUrl = `${process.env.QIITA_API_URL}?per_page=4`;
   const res = await ky.get(apiUrl, {
     headers: {
       Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
@@ -108,7 +108,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const generatedAt = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
   return {
-    props: { generatedAt, ogpUrls, qiitaItems: parsedQiitaItems },
+    props: { generatedAt, qiitaItems: parsedQiitaItems },
     revalidate: 60 * 10,
   };
 };
