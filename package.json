@@ -14,12 +14,15 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "dayjs": "^1.11.3",
+    "jsdom": "^20.0.0",
     "ky": "^0.31.0",
     "next": "12.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/jsdom": "^16.2.14",
     "@types/node": "18.0.3",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
