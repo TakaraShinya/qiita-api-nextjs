@@ -1,9 +1,9 @@
-# next-lint-template-tailwind
+# qiita-api-nextjs
 
-Qiita で説明した Next.js の Lint 設定のテンプレートプロジェクトです
+Next.js で Qiita API を使うサンプルです。
 
-Tailwind CSS にも対応しています。
+ISR を使用しています。
 
 ## Qiita
 
-https://qiita.com/ganja_tuber/items/95507e658ecfef7e9457
+https://qiita.com/ganja_tuber/items/0fe614ee469b4124a43d
