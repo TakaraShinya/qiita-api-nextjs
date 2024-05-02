@@ -46,4 +46,38 @@ export type ParsedQiitaItem = {
   title: string;
   updated_at: string;
   url: string;
+  user: {
+    description: string;
+    facebook_id: string;
+    followees_count: number;
+    followers_count: number;
+    github_login_name: string;
+    id: string;
+    name: string;
+    organization: string;
+    profile_image_url: string;
+  };
+};
+
+export type OrgQiitaItemsResponse = {
+  author: {
+    name: string;
+    profileImageUrl: string;
+    urlName: string;
+  };
+  encryptedId: string;
+  isLikedByViewer: boolean;
+  isStockableByViewer: boolean;
+  isStockedByViewer: boolean;
+  likesCount: number;
+  linkUrl: string;
+  ogpImageUrl: string;
+  organization: {
+    name: string;
+    urlName: string;
+  };
+  publishedAt: string;
+  tags: { name: string; versions: [] }[];
+  title: string;
+  uuid: string;
 };

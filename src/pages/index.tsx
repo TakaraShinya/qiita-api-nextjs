@@ -15,7 +15,7 @@ type HomeProps = {
 const Home: NextPage<HomeProps> = ({ qiitaItems, generatedAt }) => {
   return (
     <div className="mx-auto max-w-screen-md">
-      <h1>更新日時: {generatedAt}</h1>
+      <h1>📅 更新日時: {generatedAt}</h1>
       <div className="flex flex-wrap gap-y-12">
         {qiitaItems.map(({ id, likes_count, ogpImageUrl, url, title }, i) => {
           return (
@@ -47,7 +47,7 @@ const Home: NextPage<HomeProps> = ({ qiitaItems, generatedAt }) => {
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const jsdom = new JSDOM();
-  const apiUrl = `${process.env.QIITA_API_URL}?per_page=4`;
+  const apiUrl = `${process.env.QIITA_API_URL}?per_page=10`;
   const res = await ky.get(apiUrl, {
     headers: {
       Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
