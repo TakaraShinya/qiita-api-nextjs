@@ -19,74 +19,43 @@ const Ranking: NextPage<RankingProps> = ({ generatedAt, myQiitaItems, orgQiitaIt
   return (
     <div className="mx-auto max-w-screen-2xl">
       {/* <Tabs tabs={['Tab1', 'Tab2', 'Tab3']} /> */}
-      <h1>📅 更新日時: {generatedAt}</h1>
-      <div className="flex flex-wrap gap-y-12">
-        {myQiitaItems
-          .sort((a, b) => (a.likes_count > b.likes_count ? -1 : 1))
-          .map(({ id, likes_count, ogpImageUrl, url, title, tags, user, created_at }, i) => {
-            return (
-              <div
-                className={`w-full p-0 sm:w-1/4 ${i % 4 === 0 ? "sm:pr-2" : "sm:pl-2"}`}
-                key={id}
-              >
-                <a
-                  className="block overflow-hidden rounded-lg border-2 border-gray-300 hover:opacity-50"
-                  href={url}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <Image
-                    alt={`${title}のQGP画像`}
-                    height={630}
-                    layout="responsive"
-                    src={ogpImageUrl}
-                    width={1200}
-                  />
-                </a>
-                <div className="w-50 mt-2 h-24 rounded-lg bg-qiita text-center font-bold leading-8 text-white">
-                  👍 {likes_count} LGTM <br />
-                  <span>👨 {user.name}</span> <br />
-                  <span>📅 {created_at}</span>
-                </div>
-              </div>
-            );
-          })}
-      </div>
-      <hr style={{ height: "10px", width: "100%" }}></hr>
-      <h1>📅 更新日時: {generatedAt}</h1>
-      <div className="flex flex-wrap gap-y-12">
-        {orgQiitaItems
-          .sort((a, b) => (a.likesCount > b.likesCount ? -1 : 1))
-          .map(
-            ({ uuid, likesCount, linkUrl, ogpImageUrl, title, tags, author, publishedAt }, i) => {
-              return (
-                <div
-                  className={`w-full p-0 sm:w-1/4 ${i % 4 === 0 ? "sm:pr-2" : "sm:pl-2"}`}
-                  key={uuid}
-                >
-                  <a
-                    className="block overflow-hidden rounded-lg border-2 border-gray-300 hover:opacity-50"
-                    href={linkUrl}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <Image
-                      alt={`${title}のQGP画像`}
-                      height={630}
-                      layout="responsive"
-                      src={ogpImageUrl ?? author.profileImageUrl}
-                      width={1200}
+      <div className="bg-[#800000] p-4 font-sans text-white">
+        <div className="my-4 text-center text-4xl font-bold text-yellow-400">
+          🏆 Qiita LGTMランキング 🏆
+        </div>
+        <div className="grid grid-cols-1 gap-4">
+          {orgQiitaItems
+            .sort((a, b) => (a.likesCount > b.likesCount ? -1 : 1))
+            .map(
+              ({ uuid, likesCount, linkUrl, ogpImageUrl, title, tags, author, publishedAt }, i) => {
+                return (
+                  <div className="flex items-center rounded bg-[#fec857] p-4 shadow-md" key={uuid}>
+                    <div className="h-[50px] w-[50px] flex-none rounded-full bg-[#ffe564] text-center text-2xl font-extrabold leading-[50px] text-[#800000]">
+                      {i + 1}
+                    </div>
+                    <img
+                      alt={`avatar for ${title}`}
+                      className="mx-2 h-[50px] w-[50px] flex-none rounded-full"
+                      src={author.profileImageUrl}
                     />
-                  </a>
-                  <div className="w-50 mt-2 h-24 rounded-lg bg-qiita text-center font-bold leading-8 text-white">
-                    👍 {likesCount} LGTM <br />
-                    <span>👨 {author.name}</span> <br />
-                    <span>📅 {publishedAt}</span>
+                    <div className="ml-4 flex-grow">
+                      <Image
+                        alt={`${title}のQGP画像`}
+                        height={200}
+                        layout="responsive"
+                        src={ogpImageUrl ?? author.profileImageUrl}
+                        width={400}
+                      />
+                    </div>
+                    <div className="mt-2 h-10 w-40 rounded-lg bg-qiita text-center text-4xl font-bold leading-10 text-white">
+                      👍 {likesCount}
+                      <br />
+                    </div>
                   </div>
-                </div>
-              );
-            },
-          )}
+                );
+              },
+            )}
+        </div>
       </div>
     </div>
   );
