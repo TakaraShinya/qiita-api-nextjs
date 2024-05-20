@@ -101,6 +101,17 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
         title,
         updated_at,
         url,
+        user: {
+          description: "",
+          facebook_id: "",
+          followees_count: 0,
+          followers_count: 0,
+          github_login_name: "",
+          id: "",
+          name: "",
+          organization: "",
+          profile_image_url: "",
+        }, // Add the missing 'user' property
       };
       return parsedItem;
     },
