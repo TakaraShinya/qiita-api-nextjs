@@ -33,27 +33,27 @@ const Ranking: NextPage<RankingProps> = ({ generatedAt, myQiitaItems, orgQiitaIt
                     <div className="h-[50px] w-[50px] flex-none rounded-full bg-[#ffe564] text-center text-2xl font-extrabold leading-[50px] text-[#800000]">
                       {i + 1}
                     </div>
+                    <img
+                      alt={`avatar for ${title}`}
+                      className="mx-2 h-[50px] w-[50px] flex-none rounded-full"
+                      src={author.profileImageUrl}
+                    />
                     <a
                       className="block overflow-hidden rounded-lg border-2 border-gray-300 hover:opacity-50"
                       href={linkUrl}
                       rel="noreferrer"
                       target="_blank"
                     >
-                      <img
-                        alt={`avatar for ${title}`}
-                        className="mx-2 h-[50px] w-[50px] flex-none rounded-full"
-                        src={author.profileImageUrl}
-                      />
+                      <div className="ml-4 flex-grow">
+                        <Image
+                          alt={`${title}のQGP画像`}
+                          height={200}
+                          layout="responsive"
+                          src={ogpImageUrl ?? author.profileImageUrl}
+                          width={400}
+                        />
+                      </div>
                     </a>
-                    <div className="ml-4 flex-grow">
-                      <Image
-                        alt={`${title}のQGP画像`}
-                        height={200}
-                        layout="responsive"
-                        src={ogpImageUrl ?? author.profileImageUrl}
-                        width={400}
-                      />
-                    </div>
                     <div className="mt-2 h-10 w-40 rounded-lg bg-qiita text-center text-4xl font-bold leading-10 text-white">
                       👍 {likesCount}
                       <br />
