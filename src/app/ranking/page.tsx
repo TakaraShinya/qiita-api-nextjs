@@ -1,12 +1,10 @@
 import cheerio from "cheerio";
 import dayjs from "dayjs";
 import { JSDOM } from "jsdom";
-import ky from "ky";
 import Image from "next/image";
+import Link from "next/link";
 
 import { ParsedQiitaItem, QiitaItemResponse, OrgQiitaItemsResponse } from "types";
-
-import type { GetStaticProps, NextPage } from "next";
 
 const org_url: string = "https://qiita.com/organizations/ca-adv/items";
 type RankingProps = {
@@ -15,7 +13,13 @@ type RankingProps = {
   orgQiitaItems: OrgQiitaItemsResponse[];
 };
 
-const Ranking: NextPage<RankingProps> = ({ generatedAt, myQiitaItems, orgQiitaItems }) => {
+const Page = async () => {
+  const { generatedAt, myQiitaItems, orgQiitaItems } = await fetchQiita();
+
+  if (!orgQiitaItems || orgQiitaItems.length === 0) {
+    return <div>データがありません</div>;
+  }
+
   return (
     <div className="mx-auto max-w-screen-2xl">
       {/* <Tabs tabs={['Tab1', 'Tab2', 'Tab3']} /> */}
@@ -33,15 +37,16 @@ const Ranking: NextPage<RankingProps> = ({ generatedAt, myQiitaItems, orgQiitaIt
                     <div className="h-[50px] w-[50px] flex-none rounded-full bg-[#ffe564] text-center text-2xl font-extrabold leading-[50px] text-[#800000]">
                       {i + 1}
                     </div>
-                    <img
+                    <Image
                       alt={`avatar for ${title}`}
                       className="mx-2 h-[50px] w-[50px] flex-none rounded-full"
+                      height={50}
                       src={author.profileImageUrl}
+                      width={50}
                     />
-                    <a
+                    <Link
                       className="block overflow-hidden rounded-lg border-2 border-gray-300 hover:opacity-50"
                       href={linkUrl}
-                      rel="noreferrer"
                       target="_blank"
                     >
                       <div className="ml-4 flex-grow">
@@ -53,7 +58,7 @@ const Ranking: NextPage<RankingProps> = ({ generatedAt, myQiitaItems, orgQiitaIt
                           width={400}
                         />
                       </div>
-                    </a>
+                    </Link>
                     <div className="mt-2 h-10 w-40 rounded-lg bg-qiita text-center text-4xl font-bold leading-10 text-white">
                       👍 {likesCount}
                       <br />
@@ -68,19 +73,20 @@ const Ranking: NextPage<RankingProps> = ({ generatedAt, myQiitaItems, orgQiitaIt
   );
 };
 
-export const getStaticProps: GetStaticProps<RankingProps> = async () => {
+const fetchQiita = async () => {
   const jsdom = new JSDOM();
   const apiUrl = `${process.env.QIITA_API_URL}?per_page=10`;
-  const res = await ky.get(apiUrl, {
+  const res = await fetch(apiUrl, {
     headers: {
       Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
     },
+    next: { revalidate: 60 * 10 },
   });
   const myQiitaItems = (await res.json()) as QiitaItemResponse[];
   const ogpUrls: string[] = [];
   for (let i = 0; i < myQiitaItems.length; i++) {
     const { url } = myQiitaItems[i];
-    const res = await ky.get(url);
+    const res = await fetch(url);
     const text = await res.text();
     const el = new jsdom.window.DOMParser().parseFromString(text, "text/html");
     const headEls = el.head.children;
@@ -132,7 +138,7 @@ export const getStaticProps: GetStaticProps<RankingProps> = async () => {
   );
 
   const generatedAt = dayjs().format("YYYY-MM-DD HH:mm:ss");
-  const response = await ky.get(org_url);
+  const response = await fetch(org_url);
   const htmlContent = await response.text(); // Extract the HTML content from the KyResponse object
   const $ = cheerio.load(htmlContent); // Pass the HTML content to cheerio.load()
 
@@ -146,13 +152,12 @@ export const getStaticProps: GetStaticProps<RankingProps> = async () => {
     };
   }
   const parsedContent = JSON.parse(org_obj);
-  console.log(parsedContent.organization.paginatedOrganizationArticles.items);
   const org_items = parsedContent.organization.paginatedOrganizationArticles
     .items as OrgQiitaItemsResponse[];
   const orgOgpUrls: string[] = [];
   for (let i = 0; i < org_items.length; i++) {
     const { linkUrl } = org_items[i];
-    const res = await ky.get(linkUrl);
+    const res = await fetch(linkUrl);
     const orgtext = await res.text();
     const ele = new jsdom.window.DOMParser().parseFromString(orgtext, "text/html");
     const headEls = ele.head.children;
@@ -165,10 +170,7 @@ export const getStaticProps: GetStaticProps<RankingProps> = async () => {
     });
   }
 
-  return {
-    props: { generatedAt, myQiitaItems: parsedQiitaItems, orgQiitaItems: org_items }, // Use org_items in props object
-    revalidate: 60 * 10,
-  };
+  return { generatedAt, myQiitaItems: parsedQiitaItems, orgQiitaItems: org_items };
 };
 
-export default Ranking;
+export default Page;
