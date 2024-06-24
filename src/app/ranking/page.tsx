@@ -6,6 +6,9 @@ import Link from "next/link";
 
 import { ParsedQiitaItem, QiitaItemResponse, OrgQiitaItemsResponse } from "types";
 
+import { ItemContainerScroll } from "./components/ui/item-container-scroll-animation";
+import { TopContainerScroll } from "./components/ui/top-container-scroll-animation";
+
 const org_url: string = "https://qiita.com/organizations/ca-adv/items";
 type RankingProps = {
   generatedAt: string;
@@ -20,21 +23,70 @@ const Page = async () => {
     return <div>データがありません</div>;
   }
 
+  // TODO: fetchQiita側でソートさせる
+  const sortedMyQiitaItems = orgQiitaItems.sort((a, b) => (a.likesCount > b.likesCount ? -1 : 1));
+  const [firstItem, ...otherItems] = sortedMyQiitaItems;
+
   return (
     <div className="mx-auto max-w-screen-2xl">
       {/* <Tabs tabs={['Tab1', 'Tab2', 'Tab3']} /> */}
       <div className="bg-[#800000] p-4 font-sans text-white">
-        <div className="my-4 text-center text-4xl font-bold text-yellow-400">
+        <div className="my-4 text-center text-8xl font-bold text-yellow-400">
           🏆 Qiita LGTMランキング 🏆
         </div>
-        <div className="grid grid-cols-1 gap-4">
-          {orgQiitaItems
-            .sort((a, b) => (a.likesCount > b.likesCount ? -1 : 1))
-            .map(
-              ({ uuid, likesCount, linkUrl, ogpImageUrl, title, tags, author, publishedAt }, i) => {
-                return (
+        <TopContainerScroll
+          titleComponent={
+            <div className="mt-12 flex">
+              <p className="text-6xl font-bold">🏆 1位 🏆</p>
+            </div>
+          }
+        >
+          <div
+            className="flex h-full items-center rounded-xl  bg-[#fec857] p-4 shadow-md"
+            key={firstItem.uuid}
+          >
+            <Image
+              alt={`avatar for ${firstItem.title}`}
+              className="mx-2 h-[50px] w-[50px] flex-none rounded-full"
+              height={50}
+              src={firstItem.author.profileImageUrl}
+              width={50}
+            />
+            <Link
+              className="block overflow-hidden rounded-lg border-2 border-gray-300 hover:opacity-50"
+              href={firstItem.linkUrl}
+              target="_blank"
+            >
+              <div className="ml-4 flex-grow">
+                <Image
+                  alt={`${firstItem.title}のQGP画像`}
+                  height={200}
+                  layout="responsive"
+                  src={firstItem.ogpImageUrl ?? firstItem.author.profileImageUrl}
+                  width={400}
+                />
+              </div>
+            </Link>
+            <div className="mt-2 h-10 w-40 rounded-lg bg-qiita text-center text-4xl font-bold leading-10 text-white">
+              👍 {firstItem.likesCount}
+              <br />
+            </div>
+          </div>
+        </TopContainerScroll>
+        <div className="grid grid-cols-2 gap-4">
+          {otherItems.map(
+            ({ uuid, likesCount, linkUrl, ogpImageUrl, title, tags, author, publishedAt }, i) => {
+              return (
+                <ItemContainerScroll
+                  key={uuid}
+                  titleComponent={
+                    <div className="mt-12 flex">
+                      <p className="text-6xl font-bold">🏆 {i + 2}位 🏆</p>
+                    </div>
+                  }
+                >
                   <div className="flex items-center rounded bg-[#fec857] p-4 shadow-md" key={uuid}>
-                    <div className="h-[50px] w-[50px] flex-none rounded-full bg-[#ffe564] text-center text-2xl font-extrabold leading-[50px] text-[#800000]">
+                    <div className="h-full w-[50px] flex-none rounded-full bg-[#ffe564] text-center text-2xl font-extrabold leading-[50px] text-[#800000]">
                       {i + 1}
                     </div>
                     <Image
@@ -64,9 +116,10 @@ const Page = async () => {
                       <br />
                     </div>
                   </div>
-                );
-              },
-            )}
+                </ItemContainerScroll>
+              );
+            },
+          )}
         </div>
       </div>
     </div>
