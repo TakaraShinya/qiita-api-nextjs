@@ -45,7 +45,6 @@ export const ItemContainerScroll = ({
   const [deviseType, setDeviceType] = React.useState<DEVISE_TYPE>("DESKTOP" as DEVISE_TYPE);
 
   React.useEffect(() => {
-    console.log("window.innerWidth", window.innerWidth);
     const deviseType = decideDevice(window.innerWidth);
 
     const checkDevise = () => {
@@ -57,8 +56,6 @@ export const ItemContainerScroll = ({
       window.removeEventListener("resize", checkDevise);
     };
   }, []);
-
-  console.log("deviseType", deviseType);
 
   const rotateDimensions = () => {
     if (deviseType === "DESKTOP") return [75, 0];

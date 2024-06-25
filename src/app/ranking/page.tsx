@@ -4,9 +4,12 @@ import { JSDOM } from "jsdom";
 import Image from "next/image";
 import Link from "next/link";
 
+import { AnimatedTooltip } from "components/ui/animated-tooltip";
+import { GlareCard } from "components/ui/glare-card";
 import { ParsedQiitaItem, QiitaItemResponse, OrgQiitaItemsResponse } from "types";
 
 import { ItemContainerScroll } from "./components/ui/item-container-scroll-animation";
+import LikesCountButton from "./components/ui/likes-count-button";
 import { TopContainerScroll } from "./components/ui/top-container-scroll-animation";
 
 const org_url: string = "https://qiita.com/organizations/ca-adv/items";
@@ -41,35 +44,43 @@ const Page = async () => {
             </div>
           }
         >
-          <div
-            className="flex h-full items-center rounded-xl  bg-[#fec857] p-4 shadow-md"
-            key={firstItem.uuid}
-          >
-            <Image
-              alt={`avatar for ${firstItem.title}`}
-              className="mx-2 h-[50px] w-[50px] flex-none rounded-full"
-              height={50}
-              src={firstItem.author.profileImageUrl}
-              width={50}
-            />
-            <Link
-              className="block overflow-hidden rounded-lg border-2 border-gray-300 hover:opacity-50"
-              href={firstItem.linkUrl}
-              target="_blank"
-            >
-              <div className="ml-4 flex-grow">
+          <div className="flex h-full flex-col items-center rounded-lg border border-gray-200 border-gray-700 bg-gray-800 bg-white  py-2 shadow">
+            <div className="flex basis-3/4 items-center space-x-4">
+              <GlareCard href={firstItem.linkUrl}>
                 <Image
                   alt={`${firstItem.title}のQGP画像`}
-                  height={200}
-                  layout="responsive"
+                  className="h-full w-full rounded object-cover md:h-auto"
+                  height={1200}
                   src={firstItem.ogpImageUrl ?? firstItem.author.profileImageUrl}
-                  width={400}
+                  width={1200}
                 />
+              </GlareCard>
+            </div>
+            <div className="flex basis-1/4 items-center">
+              <AnimatedTooltip
+                image={firstItem.author.profileImageUrl}
+                name={firstItem.author.urlName}
+              />
+
+              <div className="item-center flex flex-col space-y-1.5">
+                <div className="ml-6 flex flex-row items-center justify-end">
+                  <LikesCountButton likesCount={firstItem.likesCount} />
+                </div>
+
+                <div className="ml-6 flex flex-row items-center rounded border py-1 pl-2 pr-1">
+                  <p className="py-2 pr-2 text-lg">タグ</p>
+                  {firstItem.tags.map((tag) => (
+                    <Link
+                      className="me-2 rounded-xl bg-gray-600 px-2 py-1 font-medium tracking-widest text-gray-300 duration-150 ease-in hover:bg-gray-500 hover:text-white"
+                      href={`https://qiita.com/tags/${tag.urlName}`}
+                      key={tag.name}
+                      target="_blank"
+                    >
+                      {tag.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </Link>
-            <div className="mt-2 h-10 w-40 rounded-lg bg-qiita text-center text-4xl font-bold leading-10 text-white">
-              👍 {firstItem.likesCount}
-              <br />
             </div>
           </div>
         </TopContainerScroll>
