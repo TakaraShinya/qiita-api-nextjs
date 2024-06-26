@@ -13,14 +13,9 @@ import LikesCountButton from "./components/ui/likes-count-button";
 import { TopContainerScroll } from "./components/ui/top-container-scroll-animation";
 
 const org_url: string = "https://qiita.com/organizations/ca-adv/items";
-type RankingProps = {
-  generatedAt: string;
-  myQiitaItems: ParsedQiitaItem[];
-  orgQiitaItems: OrgQiitaItemsResponse[];
-};
 
 const Page = async () => {
-  const { generatedAt, myQiitaItems, orgQiitaItems } = await fetchQiita();
+  const { orgQiitaItems } = await fetchQiita();
 
   if (!orgQiitaItems || orgQiitaItems.length === 0) {
     return <div>データがありません</div>;
@@ -32,7 +27,6 @@ const Page = async () => {
 
   return (
     <div className="mx-auto max-w-screen-2xl">
-      {/* <Tabs tabs={['Tab1', 'Tab2', 'Tab3']} /> */}
       <div className="bg-[#800000] p-4 font-sans text-white">
         <div className="my-4 text-center text-8xl font-bold text-yellow-400">
           🏆 Qiita LGTMランキング 🏆
