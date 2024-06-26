@@ -64,7 +64,7 @@ const Page = async () => {
 
               <div className="item-center flex flex-col space-y-1.5">
                 <div className="ml-6 flex flex-row items-center justify-end">
-                  <LikesCountButton likesCount={firstItem.likesCount} />
+                  <LikesCountButton id={firstItem.uuid} likesCount={firstItem.likesCount} />
                 </div>
 
                 <div className="ml-6 flex flex-row items-center rounded border py-1 pl-2 pr-1">
