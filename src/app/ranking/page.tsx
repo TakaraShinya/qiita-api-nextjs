@@ -38,19 +38,20 @@ const Page = async () => {
             </div>
           }
         >
-          <div className="flex h-full flex-col items-center rounded-lg border border-gray-200 border-gray-700 bg-gray-800 bg-white  py-2 shadow">
-            <div className="flex basis-3/4 items-center space-x-4">
+          <div className="flex h-full flex-col items-center rounded-lg border border-gray-200 border-gray-700 bg-gray-800 py-4 shadow">
+            <div className="flex basis-4/5 items-center justify-center overflow-hidden">
               <GlareCard href={firstItem.linkUrl}>
                 <Image
                   alt={`${firstItem.title}のQGP画像`}
-                  className="h-full w-full rounded object-cover md:h-auto"
-                  height={1200}
+                  className="h-full max-h-[850px] w-full max-w-full rounded object-cover"
+                  height={750}
+                  sizes="(max-width: 768px) 750px, (max-width: 1200px) 750px, 750px"
                   src={firstItem.ogpImageUrl ?? firstItem.author.profileImageUrl}
                   width={1200}
                 />
               </GlareCard>
             </div>
-            <div className="flex basis-1/4 items-center">
+            <div className="flex basis-1/5 items-center">
               <AnimatedTooltip
                 image={firstItem.author.profileImageUrl}
                 name={firstItem.author.urlName}

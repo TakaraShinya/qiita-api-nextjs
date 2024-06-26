@@ -116,7 +116,7 @@ export const Card = ({ rotate, scale, children, style }: CardProps) => {
       }}
     >
       <div
-        className=" h-full w-full  overflow-hidden rounded-2xl bg-gray-100 md:rounded-2xl md:p-4 dark:bg-zinc-900 "
+        className=" h-full w-full  overflow-hidden rounded-2xl bg-zinc-900 md:rounded-2xl md:p-4"
         style={div}
       >
         {children}
