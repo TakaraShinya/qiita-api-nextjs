@@ -4,8 +4,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {/* Layout UI */}
-        <main>{children}</main>
+        <main className="bg-red-800">{children}</main>
       </body>
     </html>
   );
