@@ -80,66 +80,58 @@ const QiitaItems = async () => {
           </div>
         </TopContainerScroll>
         <div className="grid grid-cols-1 gap-4">
-          {otherItems.map(
-            ({ uuid, likesCount, linkUrl, ogpImageUrl, title, tags, author, publishedAt }, i) => {
-              return (
-                <ItemContainerScroll
-                  key={uuid}
-                  titleComponent={
-                    <div className="mt-12 flex">
-                      <p className="text-6xl font-bold">🏆 {i + 2}位 🏆</p>
-                    </div>
-                  }
-                >
-                  <div className="flex h-full flex-col items-center rounded-lg border border-gray-200 border-gray-700 bg-gray-800 py-4 shadow">
-                    <div className="flex basis-4/5 items-center justify-center overflow-hidden">
-                      <GlareCard href={linkUrl}>
-                        <Image
-                          alt={`${title}のQGP画像`}
-                          className="h-full max-h-[850px] w-full max-w-full rounded object-cover"
-                          height={750}
-                          sizes="(max-width: 768px) 750px, (max-width: 1200px) 750px, 750px"
-                          src={ogpImageUrl ?? author.profileImageUrl}
-                          width={1200}
-                        />
-                      </GlareCard>
+          {otherItems.map(({ uuid, likesCount, linkUrl, ogpImageUrl, title, tags, author }, i) => {
+            return (
+              <ItemContainerScroll
+                key={uuid}
+                titleComponent={
+                  <div className="mt-12 flex">
+                    <p className="text-6xl font-bold">🏆 {i + 2}位 🏆</p>
+                  </div>
+                }
+              >
+                <div className="flex h-full flex-col items-center rounded-lg border border-gray-200 border-gray-700 bg-gray-800 py-4 shadow">
+                  <div className="flex basis-4/5 items-center justify-center overflow-hidden">
+                    <GlareCard href={linkUrl}>
+                      <Image
+                        alt={`${title}のQGP画像`}
+                        className="h-full max-h-[850px] w-full max-w-full rounded object-cover"
+                        height={750}
+                        sizes="(max-width: 768px) 750px, (max-width: 1200px) 750px, 750px"
+                        src={ogpImageUrl ?? author.profileImageUrl}
+                        width={1200}
+                      />
+                    </GlareCard>
+                  </div>
+                  <div className="flex w-full basis-1/5 items-center px-24">
+                    <div className="basis-auto">
+                      <AnimatedTooltip image={author.profileImageUrl} name={author.urlName} />
                     </div>
 
-                    <div className="flex w-full basis-1/5 items-center">
-                      <div className="flex min-w-0 basis-1/5 items-center justify-center overflow-hidden">
-                        <AnimatedTooltip image={author.profileImageUrl} name={author.urlName} />
+                    <div className="item-center flex flex-col space-y-1.5">
+                      <div className="ml-6 flex flex-row items-center justify-end">
+                        <LikesCountButton id={uuid} likesCount={likesCount} />
                       </div>
-                      <div className="flex basis-auto">
-                        <div className="flex w-full flex-col items-center space-y-1.5">
-                          <div className="flex w-full flex-row items-center justify-end px-6">
-                            <LikesCountButton id={uuid} likesCount={likesCount} />
-                          </div>
 
-                          <div className="flex w-full max-w-full flex-row items-center px-6">
-                            <p className="flex-shrink-0 py-2 pr-2 text-lg">タグ</p>
-                            <div className="flex-1 overflow-hidden">
-                              <div className="flex space-x-2 overflow-x-auto rounded border py-1 pl-2 pr-1">
-                                {tags.map((tag) => (
-                                  <Link
-                                    className="rounded-xl bg-gray-600 px-2 py-1 font-medium tracking-widest text-gray-300 duration-150 ease-in hover:bg-gray-500 hover:text-white"
-                                    href={`https://qiita.com/tags/${tag.urlName}`}
-                                    key={tag.name}
-                                    target="_blank"
-                                  >
-                                    {tag.name}
-                                  </Link>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="ml-6 flex flex-row items-center rounded border py-1 pl-2 pr-1">
+                        <p className="py-2 pr-2 text-lg">タグ</p>
+                        {tags.map((tag) => (
+                          <Link
+                            className="me-2 rounded-xl bg-gray-600 px-2 py-1 font-medium tracking-widest text-gray-300 duration-150 ease-in hover:bg-gray-500 hover:text-white"
+                            href={`https://qiita.com/tags/${tag.urlName}`}
+                            key={tag.name}
+                            target="_blank"
+                          >
+                            {tag.name}
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   </div>
-                </ItemContainerScroll>
-              );
-            },
-          )}
+                </div>
+              </ItemContainerScroll>
+            );
+          })}
         </div>
       </div>
     </div>
