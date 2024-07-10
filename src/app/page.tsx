@@ -1,18 +1,17 @@
 import dayjs from "dayjs";
 import { JSDOM } from "jsdom";
-import ky from "ky";
 import Image from "next/image";
 
 import { ParsedQiitaItem, QiitaItemResponse } from "types";
 
-import type { GetStaticProps, NextPage } from "next";
-
-type HomeProps = {
+type ApiResponse = {
   generatedAt: string;
   qiitaItems: ParsedQiitaItem[];
 };
 
-const Home: NextPage<HomeProps> = ({ qiitaItems, generatedAt }) => {
+const Page = async () => {
+  const { qiitaItems, generatedAt } = await fetchMyArticle();
+
   return (
     <div className="mx-auto max-w-screen-md">
       <h1>📅 更新日時: {generatedAt}</h1>
@@ -45,19 +44,21 @@ const Home: NextPage<HomeProps> = ({ qiitaItems, generatedAt }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+export const fetchMyArticle = async (): Promise<ApiResponse> => {
   const jsdom = new JSDOM();
   const apiUrl = `${process.env.QIITA_API_URL}?per_page=10`;
-  const res = await ky.get(apiUrl, {
+  const res = await fetch(apiUrl, {
     headers: {
       Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
     },
+    next: { revalidate: 60 * 10 },
   });
+
   const qiitaItems = (await res.json()) as QiitaItemResponse[];
   const ogpUrls: string[] = [];
   for (let i = 0; i < qiitaItems.length; i++) {
     const { url } = qiitaItems[i];
-    const res = await ky.get(url);
+    const res = await fetch(url);
     const text = await res.text();
     const el = new jsdom.window.DOMParser().parseFromString(text, "text/html");
     const headEls = el.head.children;
@@ -118,10 +119,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   );
   const generatedAt = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
-  return {
-    props: { generatedAt, qiitaItems: parsedQiitaItems },
-    revalidate: 60 * 10,
-  };
+  return { generatedAt, qiitaItems: parsedQiitaItems };
 };
 
-export default Home;
+export default Page;
