@@ -8,7 +8,7 @@ export type QiitaItemResponse = {
   private: boolean;
   reactions_count: number;
   rendered_body: string;
-  tags: { name: string; urlName: [] }[];
+  tags: { name: string; urlName: string }[];
   title: string;
   updated_at: string;
   url: string;
@@ -42,7 +42,7 @@ export type ParsedQiitaItem = {
   page_views_count: number;
   private: boolean;
   reactions_count: number;
-  tags: { name: string; urlName: [] }[];
+  tags: { name: string; urlName: string }[];
   title: string;
   updated_at: string;
   url: string;
@@ -77,7 +77,7 @@ export type OrgQiitaItemsResponse = {
     urlName: string;
   };
   publishedAt: string;
-  tags: { name: string; urlName: [] }[];
+  tags: { name: string; urlName: string }[];
   title: string;
   uuid: string;
 };

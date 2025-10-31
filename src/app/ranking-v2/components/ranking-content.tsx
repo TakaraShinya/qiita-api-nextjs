@@ -46,12 +46,22 @@ const fetchQiita = async () => {
   const mockData: OrgQiitaItemsResponse[] = [
     {
       author: {
+        name: "Developer 1",
         profileImageUrl: "https://avatars.githubusercontent.com/u/1?v=4",
         urlName: "developer1",
       },
+      encryptedId: "encrypted-1",
+      isLikedByViewer: false,
+      isStockableByViewer: true,
+      isStockedByViewer: false,
       likesCount: 342,
       linkUrl: "https://qiita.com/example1",
       ogpImageUrl: "https://picsum.photos/1200/630?random=1",
+      organization: {
+        name: "CA Advancers",
+        urlName: "ca-adv",
+      },
+      publishedAt: "2024-01-01T00:00:00Z",
       tags: [
         { name: "React", urlName: "react" },
         { name: "TypeScript", urlName: "typescript" },
@@ -62,12 +72,22 @@ const fetchQiita = async () => {
     },
     {
       author: {
+        name: "Developer 2",
         profileImageUrl: "https://avatars.githubusercontent.com/u/2?v=4",
         urlName: "developer2",
       },
+      encryptedId: "encrypted-2",
+      isLikedByViewer: false,
+      isStockableByViewer: true,
+      isStockedByViewer: false,
       likesCount: 287,
       linkUrl: "https://qiita.com/example2",
       ogpImageUrl: "https://picsum.photos/1200/630?random=2",
+      organization: {
+        name: "CA Advancers",
+        urlName: "ca-adv",
+      },
+      publishedAt: "2024-01-02T00:00:00Z",
       tags: [
         { name: "Vue.js", urlName: "vuejs" },
         { name: "JavaScript", urlName: "javascript" },
@@ -77,12 +97,22 @@ const fetchQiita = async () => {
     },
     {
       author: {
+        name: "Developer 3",
         profileImageUrl: "https://avatars.githubusercontent.com/u/3?v=4",
         urlName: "developer3",
       },
+      encryptedId: "encrypted-3",
+      isLikedByViewer: false,
+      isStockableByViewer: true,
+      isStockedByViewer: false,
       likesCount: 245,
       linkUrl: "https://qiita.com/example3",
       ogpImageUrl: "https://picsum.photos/1200/630?random=3",
+      organization: {
+        name: "CA Advancers",
+        urlName: "ca-adv",
+      },
+      publishedAt: "2024-01-03T00:00:00Z",
       tags: [
         { name: "Docker", urlName: "docker" },
         { name: "Kubernetes", urlName: "kubernetes" },
@@ -92,12 +122,22 @@ const fetchQiita = async () => {
     },
     {
       author: {
+        name: "Developer 4",
         profileImageUrl: "https://avatars.githubusercontent.com/u/4?v=4",
         urlName: "developer4",
       },
+      encryptedId: "encrypted-4",
+      isLikedByViewer: false,
+      isStockableByViewer: true,
+      isStockedByViewer: false,
       likesCount: 198,
       linkUrl: "https://qiita.com/example4",
       ogpImageUrl: "https://picsum.photos/1200/630?random=4",
+      organization: {
+        name: "CA Advancers",
+        urlName: "ca-adv",
+      },
+      publishedAt: "2024-01-04T00:00:00Z",
       tags: [
         { name: "Python", urlName: "python" },
         { name: "機械学習", urlName: "machinelearning" },
@@ -107,12 +147,22 @@ const fetchQiita = async () => {
     },
     {
       author: {
+        name: "Developer 5",
         profileImageUrl: "https://avatars.githubusercontent.com/u/5?v=4",
         urlName: "developer5",
       },
+      encryptedId: "encrypted-5",
+      isLikedByViewer: false,
+      isStockableByViewer: true,
+      isStockedByViewer: false,
       likesCount: 156,
       linkUrl: "https://qiita.com/example5",
       ogpImageUrl: "https://picsum.photos/1200/630?random=5",
+      organization: {
+        name: "CA Advancers",
+        urlName: "ca-adv",
+      },
+      publishedAt: "2024-01-05T00:00:00Z",
       tags: [
         { name: "AWS", urlName: "aws" },
         { name: "Terraform", urlName: "terraform" },
@@ -122,12 +172,22 @@ const fetchQiita = async () => {
     },
     {
       author: {
+        name: "Developer 6",
         profileImageUrl: "https://avatars.githubusercontent.com/u/6?v=4",
         urlName: "developer6",
       },
+      encryptedId: "encrypted-6",
+      isLikedByViewer: false,
+      isStockableByViewer: true,
+      isStockedByViewer: false,
       likesCount: 134,
       linkUrl: "https://qiita.com/example6",
       ogpImageUrl: "https://picsum.photos/1200/630?random=6",
+      organization: {
+        name: "CA Advancers",
+        urlName: "ca-adv",
+      },
+      publishedAt: "2024-01-06T00:00:00Z",
       tags: [
         { name: "Go", urlName: "go" },
         { name: "API", urlName: "api" },

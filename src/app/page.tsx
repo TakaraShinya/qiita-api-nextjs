@@ -44,7 +44,7 @@ const Page = async () => {
   );
 };
 
-export const fetchMyArticle = async (): Promise<ApiResponse> => {
+const fetchMyArticle = async (): Promise<ApiResponse> => {
   const jsdom = new JSDOM();
   const apiUrl = `${process.env.QIITA_API_URL}?per_page=10`;
   const res = await fetch(apiUrl, {
